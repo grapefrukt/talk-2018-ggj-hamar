@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PoissonExample : MonoBehaviour {
+public class PoissonController : MonoBehaviour {
 
 	[HideInInspector] public UniformPoissonDiskSampler sampler;
 

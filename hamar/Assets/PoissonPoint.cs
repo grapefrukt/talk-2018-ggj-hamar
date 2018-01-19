@@ -3,7 +3,7 @@
 public class PoissonPoint : MonoBehaviour {
 	public Vector2 point;
 	public int index;
-	public PoissonExample controller;
+	public PoissonController controller;
 	public bool lastOpenState = true;
 
 	void Update() {

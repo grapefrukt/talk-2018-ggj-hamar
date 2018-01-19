@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Editor {
 
-	[CustomEditor(typeof(PoissonExample))]
+	[CustomEditor(typeof(PoissonController))]
 	public class PoissonExampleEditor : UnityEditor.Editor {
 
 		public override void OnInspectorGUI() {
 			DrawDefaultInspector();
-			var poisson = (PoissonExample) target;
+			var poisson = (PoissonController) target;
 
 			GUILayout.BeginHorizontal();
 			if (GUILayout.Button("Stop")) poisson.Stop();
