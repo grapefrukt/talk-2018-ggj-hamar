@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,33 +12,51 @@ using UnityEngine;
 // The algorithm is from the "Fast Poisson Disk Sampling in Arbitrary Dimensions" paper by Robert Bridson
 // http://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
 
-public class UniformPoissonDiskSampler {
+public enum SampleStrategy {
+	oldest,
+	newest,
+	random
+}
 
-	const int DefaultPointsPerIteration = 30;
-	const int DefaultSeed = 0xfc495b;
+public class UniformPoissonDiskSampler : MonoBehaviour {
+
 	const float SquareRootTwo = 1.41421356237f;
 	const float TwoPi = Mathf.PI * 2;
 
-	Vector2 topLeft, lowerRight;
-	readonly Vector2 dimensions;
-	readonly float minimumDistance;
-	readonly int pointsPerIteration;
-	readonly float cellSize;
-	readonly int gridWidth, gridHeight;
-	readonly System.Random random;
+	[HideInInspector]
+	public Vector2 topLeft, bottomRight;
+	Vector2 dimensions;
 
-	readonly Vector2?[,] grid;
-	readonly List<Vector2> activePoints;
+	[Range(.01f, 2)]
+	public float minimumDistance;
+	[Range(1, 100)]
+	public int pointsPerIteration;
 
-	public readonly List<Vector2> points;
+	float cellSize;
+	int gridWidth, gridHeight;
+	System.Random random;
 
-	public UniformPoissonDiskSampler(Vector2 topLeft, Vector2 lowerRight, float minimumDistance, int pointsPerIteration = DefaultPointsPerIteration, int seed = DefaultSeed) {
+	Vector2?[,] grid;
+
+	[HideInInspector]
+	public List<Vector2> activePoints;
+	[HideInInspector]
+	public List<Vector2> points;
+
+	public Vector2 head { get; private set; }
+	public List<Vector2> samples { get; private set; }
+	[HideInInspector]
+	public bool lastSampleSuccessful = false;
+
+	public SampleStrategy sampleStrategy = SampleStrategy.oldest;
+	public bool waitOnSample = true;
+	public bool waitOnPoint = true;
+
+	public void Initialize(Vector2 topLeft, Vector2 lowerRight, int seed) {
 		points = new List<Vector2>();
 
 		this.topLeft = topLeft;
-		this.lowerRight = lowerRight;
-		this.minimumDistance = minimumDistance;
-		this.pointsPerIteration = pointsPerIteration;
+		this.bottomRight = lowerRight;
 
 		dimensions = lowerRight - topLeft;
 		cellSize = minimumDistance / SquareRootTwo;
@@ -48,24 +67,43 @@ public class UniformPoissonDiskSampler {
 		grid = new Vector2?[gridWidth, gridHeight];
 		activePoints = new List<Vector2>();
 
-		Sample();
+		samples = new List<Vector2>();
 	}
 
-	void Sample() {
+	public IEnumerator Sample() {
 		AddFirstPoint();
 
 		while (activePoints.Count != 0) {
-			var listIndex = random.Next(activePoints.Count);
+			var index = 0;
+			switch (sampleStrategy) {
+				case SampleStrategy.oldest:
+					index = 0;
+					break;
+				case SampleStrategy.newest:
+					index = activePoints.Count - 1;
+					break;
+				case SampleStrategy.random:
+					index = random.Next(activePoints.Count);
+					break;
+			}
+			
+			head = activePoints[index];
+			samples.Clear();
+			
 
-			var point = activePoints[listIndex];
 			var found = false;
+			for (var k = 0; k < pointsPerIteration && !found; k++) {
+				found |= AddNextPoint(head);
 
-			for (var k = 0; k < pointsPerIteration; k++)
-				found |= AddNextPoint(point);
+				lastSampleSuccessful = found;
+				if (waitOnSample) yield return new WaitForEndOfFrame();
+			}
 
-			if (!found) activePoints.RemoveAt(listIndex);
+			if (!found) activePoints.RemoveAt(index);
+
+			if (waitOnPoint) { yield return new WaitForEndOfFrame();}
+			samples.Clear();
 		}
-
 	}
 
 	void AddFirstPoint(float forceX = -1, float forceY = -1) {
@@ -88,8 +126,10 @@ public class UniformPoissonDiskSampler {
 	bool AddNextPoint(Vector2 point) {
 		var q = GenerateRandomAround(point, minimumDistance);
 
-		if (!(q.x >= topLeft.x) || !(q.x < lowerRight.x) || !(q.y > topLeft.y) ||
-		    !(q.y < lowerRight.y))
+		samples.Add(q);
+
+		if (!(q.x >= topLeft.x) || !(q.x < bottomRight.x) || !(q.y > topLeft.y) ||
+		    !(q.y < bottomRight.y))
 			return false;
 
 		var tooClose = false;

@@ -235,10 +235,10 @@ public static class GeometryDraw {
 		}
 
 		vertStartIndex = vertices.Count;
-		vertices.Capacity = vertices.Count + numVertices;
-		triangles.Capacity = triangles.Count + numTriangles * 3;
-		colors.Capacity = vertices.Capacity;
-		uv.Capacity = vertices.Capacity;
+		//vertices.Capacity = vertices.Count + numVertices;
+		//triangles.Capacity = triangles.Count + numTriangles * 3;
+		//colors.Capacity = vertices.Capacity;
+		//uv.Capacity = vertices.Capacity;
 	}
 
 	static void GetMesh(GameObject target) {
