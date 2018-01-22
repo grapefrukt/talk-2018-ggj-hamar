@@ -12,6 +12,8 @@ public class PoissonController : MonoBehaviour {
 	public bool renderColorized = true;
 	public bool renderBounds = true;
 
+	bool restartQueued = false;
+
 	public int seed = 0xff3423;
 	Coroutine coroutine;
 
@@ -29,10 +31,10 @@ public class PoissonController : MonoBehaviour {
 		coroutine = StartCoroutine(sampler.Sample());
 	}
 
-	public void Restart() {
+	void Restart() {
+		restartQueued = false;
 		Stop();
 		foreach (Transform child in transform) Destroy(child.gameObject);
-
 		Go();
 	}
 
@@ -42,6 +44,8 @@ public class PoissonController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (restartQueued) Restart();
+
 		if (sampler == null) return;
 
 		if (renderSamples) {
@@ -79,6 +83,8 @@ public class PoissonController : MonoBehaviour {
 
 	void OnDrawGizmos() {
 		if (!sampler) return;
+
+		if (!renderBounds) return;
 		var tl = sampler.topLeft;
 		var br = sampler.bottomRight;
 		var tr = new Vector2(br.x, tl.y);
@@ -95,5 +101,8 @@ public class PoissonController : MonoBehaviour {
 		var points = GetComponentsInChildren<PoissonPoint>();
 		foreach (var point in points) point.Render();
 	}
-	
+
+	public void QueueRestart() {
+		restartQueued = true;
+	}
 }

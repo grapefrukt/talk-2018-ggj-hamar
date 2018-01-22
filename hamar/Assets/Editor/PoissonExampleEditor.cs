@@ -12,7 +12,7 @@ namespace Editor {
 
 			GUILayout.BeginHorizontal();
 			if (GUILayout.Button("Stop")) poisson.Stop();
-			if (GUILayout.Button("Restart")) poisson.Restart();
+			if (GUILayout.Button("Restart")) poisson.QueueRestart();
 			GUILayout.EndHorizontal();
 		}
 

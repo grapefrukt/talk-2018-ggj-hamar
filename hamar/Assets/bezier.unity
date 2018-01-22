@@ -394,7 +394,7 @@ Transform:
   m_LocalScale: {x: 0.21598727, y: 0.21598728, z: 0.21598728}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1864904776
 GameObject:
@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1864904777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,14 +426,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029db2455e43bb44bb3c3e5b71250e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sampler: {fileID: 0}
+  sampler: {fileID: 1864904781}
   pointPrefab: {fileID: 114128679135840210, guid: 862b24c40c03c2345b0b3c737e824c6b,
     type: 2}
   renderRadius: 1
   renderSamples: 1
   renderColorized: 1
   renderBounds: 1
-  seed: 16725027
+  seed: 17
 --- !u!33 &1864904778
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -484,7 +484,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1864904781
 MonoBehaviour:
@@ -497,16 +497,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8132b4cdbe6ba9499ba07aae9fb0bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topLeft: {x: 0, y: 0}
-  bottomRight: {x: 0, y: 0}
+  topLeft: {x: -7.1111116, y: -4}
+  bottomRight: {x: 7.111111, y: 3.9999998}
   minimumDistance: 0.5
-  pointsPerIteration: 10
-  activePoints: []
-  points: []
+  pointsPerIteration: 5
+  activePoints:
+  - {x: 6.984253, y: 0.3091932}
+  - {x: 6.452728, y: -0.21590118}
+  - {x: 6.4371614, y: 0.7246864}
+  - {x: 7.0208263, y: -0.42917237}
+  points:
+  - {x: 6.984253, y: 0.3091932}
+  - {x: 6.452728, y: -0.21590118}
+  - {x: 6.4371614, y: 0.7246864}
+  - {x: 7.0208263, y: -0.42917237}
   lastSampleSuccessful: 0
   sampleStrategy: 0
   waitOnSample: 1
   waitOnPoint: 1
+  speed: 1
 --- !u!1 &1882868378
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +545,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1882868380
 MonoBehaviour:
@@ -557,13 +566,13 @@ MonoBehaviour:
   animateProgress: 1
   animationSpeed: 0.3
   progress: 0
-  drawSimpleLine: 1
-  drawControlHandles: 1
-  drawBezierOutline: 1
-  drawSecondOrder: 1
-  drawThirdOrder: 1
-  drawCurveDot: 1
-  drawCurve: 1
+  drawSimpleLine: 0
+  drawControlHandles: 0
+  drawBezierOutline: 0
+  drawSecondOrder: 0
+  drawThirdOrder: 0
+  drawCurveDot: 0
+  drawCurve: 0
 --- !u!33 &1882868381
 MeshFilter:
   m_ObjectHideFlags: 0

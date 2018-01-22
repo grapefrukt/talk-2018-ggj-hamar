@@ -52,11 +52,16 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 	public bool waitOnSample = true;
 	public bool waitOnPoint = true;
 
+	int sleepStep = 0;
+	float step = 0;
+	[Range(0, 50)]
+	public float speed = 0;
+
 	public void Initialize(Vector2 topLeft, Vector2 lowerRight, int seed) {
 		points = new List<Vector2>();
 
 		this.topLeft = topLeft;
-		this.bottomRight = lowerRight;
+		bottomRight = lowerRight;
 
 		dimensions = lowerRight - topLeft;
 		cellSize = minimumDistance / SquareRootTwo;
@@ -68,10 +73,25 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 		activePoints = new List<Vector2>();
 
 		samples = new List<Vector2>();
+
+		step = 0;
+		sleepStep = 0;
+	}
+
+	void Update() {
+		step += Time.deltaTime * speed;
+	}
+
+	bool Sleep(bool flag) {
+		if (!flag) return false;
+		if (sleepStep >= step) return true;
+		sleepStep++;
+		return false;
 	}
 
 	public IEnumerator Sample() {
 		AddFirstPoint();
+		while (Sleep(waitOnPoint)) yield return null;
 
 		while (activePoints.Count != 0) {
 			var index = 0;
@@ -90,19 +110,16 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 			head = activePoints[index];
 			samples.Clear();
 
-			if (waitOnPoint) yield return new WaitForEndOfFrame();
+			while (Sleep(waitOnPoint)) yield return null;
 
-			var found = false;
-			for (var k = 0; k < pointsPerIteration && !found; k++) {
-				found |= AddNextPoint(head);
-
-				lastSampleSuccessful = found;
-				if (waitOnSample) yield return new WaitForEndOfFrame();
+			for (var k = 0; k < pointsPerIteration; k++) {
+				var success = AddNextPoint(head);
+				lastSampleSuccessful = success;
+				while (Sleep(waitOnSample)) yield return null;
 			}
 
-			if (!found) activePoints.RemoveAt(index);
-
-			if (waitOnPoint) { yield return new WaitForEndOfFrame();}
+			while (Sleep(waitOnPoint)) yield return null;
+			activePoints.RemoveAt(index);
 			samples.Clear();
 		}
 	}
