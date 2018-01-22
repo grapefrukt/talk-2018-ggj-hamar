@@ -22,7 +22,9 @@ public class BezierController : MonoBehaviour {
 	public bool drawSimpleLine = true;
 	public bool drawControlHandles = true;
 	public bool drawBezierOutline = true;
+	public bool drawSecondOrderHandles = true;
 	public bool drawSecondOrder = true;
+	public bool drawThirdOrderHandles = true;
 	public bool drawThirdOrder = true;
 	public bool drawCurveDot = true;
 	public bool drawCurve = true;
@@ -67,9 +69,22 @@ public class BezierController : MonoBehaviour {
 			GeometryDraw.DrawLine(gameObject, new[] { c, d }, ColorSettings.instance.bezierSecondaryLineThickness, ColorSettings.instance.bezierSecondaryLine, 1);
 		}
 
+		if (drawSecondOrderHandles) {
+			GeometryDraw.DrawCircle(gameObject, ab.x, ab.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
+			GeometryDraw.DrawCircle(gameObject, bc.x, bc.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
+			GeometryDraw.DrawCircle(gameObject, cd.x, cd.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
+		}
+
 		// draw bezier interpolation lines
 		if (drawSecondOrder) GeometryDraw.DrawLine(gameObject, new[] { ab, bc }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
 		if (drawSecondOrder) GeometryDraw.DrawLine(gameObject, new[] { bc, cd }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
+
+
+		if (drawThirdOrderHandles) {
+			GeometryDraw.DrawCircle(gameObject, abbc.x, abbc.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierQuaternaryLine, 0, 1f);
+			GeometryDraw.DrawCircle(gameObject, bccd.x, bccd.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierQuaternaryLine, 0, 1f);
+		}
+
 		if (drawThirdOrder) GeometryDraw.DrawLine(gameObject, new[] { abbc, bccd }, ColorSettings.instance.bezierQuarternaryLineThickness, ColorSettings.instance.bezierQuaternaryLine);
 
 		// draw bezier dot
