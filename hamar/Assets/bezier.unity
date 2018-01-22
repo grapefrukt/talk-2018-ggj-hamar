@@ -157,7 +157,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.13725491, g: 0.05882353, b: 0.16862746, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -240,11 +240,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handles:
-  - {x: 5, y: 2}
-  - {x: 1, y: 1}
-  - {x: -1, y: -1}
   - {x: -5, y: -2}
+  - {x: -4, y: 2}
+  - {x: 3, y: 4}
+  - {x: 5, y: 0}
   animateProgress: 1
+  animationSpeed: 0.3
   progress: 0
 --- !u!33 &1882868381
 MeshFilter:
