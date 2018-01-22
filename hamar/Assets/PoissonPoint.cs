@@ -24,7 +24,7 @@ public class PoissonPoint : MonoBehaviour {
 		GeometryDraw.DrawCircle(gameObject, point.x, point.y, radius, color, 0, .6f);
 		if (controller.renderRadius) {
 			GeometryDraw.DrawCircle(gameObject, point.x, point.y, controller.sampler.minimumDistance, outlineColor, 8, 0.2f);
-			GeometryDraw.DrawCircle(gameObject, point.x, point.y, controller.sampler.minimumDistance - .02f, Color.black, 1.5f, 0.2f);
+			GeometryDraw.DrawCircle(gameObject, point.x, point.y, controller.sampler.minimumDistance - .02f, ColorSettings.instance.background, 1.5f, 0.2f);
 		}
 		GeometryDraw.Finalize(gameObject);
 

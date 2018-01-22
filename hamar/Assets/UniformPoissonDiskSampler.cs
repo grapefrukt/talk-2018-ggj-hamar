@@ -89,7 +89,8 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 			
 			head = activePoints[index];
 			samples.Clear();
-			
+
+			if (waitOnPoint) yield return new WaitForEndOfFrame();
 
 			var found = false;
 			for (var k = 0; k < pointsPerIteration && !found; k++) {

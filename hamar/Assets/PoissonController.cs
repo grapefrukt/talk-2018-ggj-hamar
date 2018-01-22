@@ -45,6 +45,16 @@ public class PoissonController : MonoBehaviour {
 		if (sampler == null) return;
 
 		if (renderSamples) {
+
+			for (var i = 0; i < 16; i++) {
+				var r0 = (float) i / (16 - 1) * Mathf.PI * 2;
+				var r1 = (float) (i + 1) / (16 - 1) * Mathf.PI * 2;
+				Debug.DrawLine(
+					sampler.head + new Vector2(Mathf.Cos(r0), Mathf.Sin(r0)) * .1f,
+					sampler.head + new Vector2(Mathf.Cos(r1), Mathf.Sin(r1)) * .1f
+				);
+			}
+
 			for (var i = 0; i < sampler.samples.Count; i++) {
 				var color = Color.red;
 				if (i == sampler.samples.Count - 1) color = sampler.lastSampleSuccessful ? Color.green : Color.white;

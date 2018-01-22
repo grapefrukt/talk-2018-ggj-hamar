@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ColorSettings : ScriptableObject {
 
+	public Color background;
+
 	public Color bezierHandle;
 	public Color bezierEndpoint;
 	public Color bezierPrimaryLine;

@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6b970697fbf2148980f5cece5b246e, type: 3}
   m_Name: ColorSettings
   m_EditorClassIdentifier: 
+  background: {r: 0.13725491, g: 0.05882353, b: 0.16862746, a: 1}
   bezierHandle: {r: 0.909804, g: 0.09019608, b: 0.2392157, a: 1}
   bezierEndpoint: {r: 0.75294125, g: 0.89019614, b: 0.7686275, a: 1}
   bezierPrimaryLine: {r: 0.9215687, g: 0.9215687, b: 0.7294118, a: 1}
