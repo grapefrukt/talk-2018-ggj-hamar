@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1864904777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,7 +569,9 @@ MonoBehaviour:
   drawSimpleLine: 0
   drawControlHandles: 0
   drawBezierOutline: 0
+  drawSecondOrderHandles: 1
   drawSecondOrder: 0
+  drawThirdOrderHandles: 1
   drawThirdOrder: 0
   drawCurveDot: 0
   drawCurve: 0
