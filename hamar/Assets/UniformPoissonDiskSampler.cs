@@ -53,7 +53,9 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 	public bool waitOnPoint = true;
 
 	int sleepStep = 0;
-	float step = 0;
+	[HideInInspector]
+	public float step = 0;
+	public bool pause = true;
 	[Range(0, 50)]
 	public float speed = 0;
 
@@ -79,6 +81,7 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 	}
 
 	void Update() {
+		if (pause) return;
 		step += Time.deltaTime * speed;
 	}
 
@@ -118,7 +121,7 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 				while (Sleep(waitOnSample)) yield return null;
 			}
 
-			while (Sleep(waitOnPoint)) yield return null;
+			//while (Sleep(waitOnPoint)) yield return null;
 			activePoints.RemoveAt(index);
 			samples.Clear();
 		}

@@ -21,9 +21,9 @@ MonoBehaviour:
   bezierSecondaryHandle: {r: 0.5294118, g: 0.7019608, b: 0.68235296, a: 1}
   bezierCurve: {r: 0.909804, g: 0.69014907, b: 0.09019606, a: 1}
   bezierCurveHandle: {r: 0.909804, g: 0.09019608, b: 0.2392157, a: 1}
-  bezierSimpleLerpThickness: 0.052
-  bezierSimpleLerpDotSize: 0.0942
-  bezierHandleDotSize: 0.0602
+  bezierSimpleLerpThickness: 0.025
+  bezierSimpleLerpDotSize: 0.1049
+  bezierHandleDotSize: 0.1218
   bezierSecondaryLineThickness: 0.024
   bezierTertiaryLineThickness: 0.024
   bezierQuarternaryLineThickness: 0.024

@@ -9,7 +9,7 @@ public class BezierController : MonoBehaviour {
 
 	int grabbedHandleIndex = -1;
 	Vector2 grabbedHandleOffset = Vector2.zero;
-	const float maxGrabDistance = 0.3f;
+	const float MaxGrabDistance = 2.0f;
 
 	public bool animateProgress = true;
 	[Range(0, 1)]
@@ -188,7 +188,7 @@ public class BezierController : MonoBehaviour {
 	}
 
 	void GrabHandle() {
-		var nearestDist = maxGrabDistance;
+		var nearestDist = MaxGrabDistance;
 		grabbedHandleIndex = -1;
 
 		var mouse = ScreenToWorld(Input.mousePosition);
