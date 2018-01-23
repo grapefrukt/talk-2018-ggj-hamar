@@ -17,7 +17,8 @@ public class BezierController : MonoBehaviour {
 	[Range(0, 1)]
 	public float progress = 0;
 
-	float time = 0;
+	[HideInInspector]
+	public float time = 0;
 
 	public bool drawSimpleLine = true;
 	public bool drawSimpleLerp = true;
