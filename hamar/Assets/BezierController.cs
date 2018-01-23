@@ -20,14 +20,23 @@ public class BezierController : MonoBehaviour {
 	float time = 0;
 
 	public bool drawSimpleLine = true;
-	public bool drawControlHandles = true;
-	public bool drawBezierOutline = true;
-	public bool drawSecondOrderHandles = true;
-	public bool drawSecondOrder = true;
-	public bool drawThirdOrderHandles = true;
-	public bool drawThirdOrder = true;
-	public bool drawCurveDot = true;
-	public bool drawCurve = true;
+	public bool drawSimpleLerp = true;
+
+	public bool drawCubicHandle = true;
+	public bool drawCubicOutline = true;
+	public bool drawCubicLerps = true;
+	public bool drawCubicLines = true;
+	public bool drawCubicCurveDot = true;
+	public bool drawCubicCurve = true;
+
+	public bool drawQuadraticHandles = true;
+	public bool drawQuadraticOutline = true;
+	public bool drawQuadraticLerps = true;
+	public bool drawQuadraticSecondOrderLines = true;
+	public bool drawQuadraticThirdOrderHandles = true;
+	public bool drawQuadraticThirdOrderLines = true;
+	public bool drawQuadraticCurveDot = true;
+	public bool drawQuadraticCurve = true;
 
 	void Update () {
 
@@ -40,8 +49,10 @@ public class BezierController : MonoBehaviour {
 		var ab = Vector2.Lerp(a, b, progress);
 		var bc = Vector2.Lerp(b, c, progress);
 		var cd = Vector2.Lerp(c, d, progress);
+		var bd = Vector2.Lerp(b, d, progress);
 		var abbc = Vector2.Lerp(ab, bc, progress);
 		var bccd = Vector2.Lerp(bc, cd, progress);
+		var abbd = Vector2.Lerp(ab, bd, progress);
 		var abbcbccd = Vector2.Lerp(abbc, bccd, progress);
 
 		GeometryDraw.Clear(gameObject);
@@ -52,46 +63,83 @@ public class BezierController : MonoBehaviour {
 		// draw simple lerp line
 		if (drawSimpleLine) { 
 			GeometryDraw.DrawLine(gameObject, new []{a, d}, ColorSettings.instance.bezierSimpleLerpThickness, ColorSettings.instance.bezierPrimaryLine);
-			// draw simple lerp dot
+		}
+
+		// draw simple lerp dot
+		if (drawSimpleLerp) {
 			GeometryDraw.DrawCircle(gameObject, ad.x, ad.y, ColorSettings.instance.bezierSimpleLerpDotSize, ColorSettings.instance.bezierHandle, 0, 1f);
 		}
 
+
+		if (drawCubicHandle) {
+			GeometryDraw.DrawCircle(gameObject, b.x, b.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierSecondaryHandle, 0, 1f);
+		}
+
+		if (drawCubicOutline) {
+			GeometryDraw.DrawLine(gameObject, new[] { a, b }, ColorSettings.instance.bezierSecondaryLineThickness, ColorSettings.instance.bezierSecondaryLine, 1);
+			GeometryDraw.DrawLine(gameObject, new[] { b, d }, ColorSettings.instance.bezierSecondaryLineThickness, ColorSettings.instance.bezierSecondaryLine, 1);
+		}
+
+		if (drawCubicLerps) {
+			GeometryDraw.DrawCircle(gameObject, ab.x, ab.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
+			GeometryDraw.DrawCircle(gameObject, bd.x, bd.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
+		}
+
+		if (drawCubicLines) {
+			GeometryDraw.DrawLine(gameObject, new[] { ab, bd }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
+		}
+
+		if (drawCubicCurveDot) {
+			GeometryDraw.DrawCircle(gameObject, abbd.x, abbd.y, .1f, ColorSettings.instance.bezierCurve, -1f, 1f);
+		}
+
+		if (drawCubicCurve) {
+			DrawCubicBezier(64, ColorSettings.instance.bezierCurveThickness, ColorSettings.instance.bezierCurveHandle);
+		}
+		
 		// draw handles
-		if (drawControlHandles) {
+		if (drawQuadraticHandles) {
 			GeometryDraw.DrawCircle(gameObject, b.x, b.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierSecondaryHandle, 0, 1f);
 			GeometryDraw.DrawCircle(gameObject, c.x, c.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierSecondaryHandle, 0, 1f);
 		}
 
 		// draw bezier lines
-		if (drawBezierOutline) {
+		if (drawQuadraticOutline) {
 			GeometryDraw.DrawLine(gameObject, new[] { a, b }, ColorSettings.instance.bezierSecondaryLineThickness, ColorSettings.instance.bezierSecondaryLine, 1);
 			GeometryDraw.DrawLine(gameObject, new[] { b, c }, ColorSettings.instance.bezierSecondaryLineThickness, ColorSettings.instance.bezierSecondaryLine, 1);
 			GeometryDraw.DrawLine(gameObject, new[] { c, d }, ColorSettings.instance.bezierSecondaryLineThickness, ColorSettings.instance.bezierSecondaryLine, 1);
 		}
 
-		if (drawSecondOrderHandles) {
+		if (drawQuadraticLerps) {
 			GeometryDraw.DrawCircle(gameObject, ab.x, ab.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
 			GeometryDraw.DrawCircle(gameObject, bc.x, bc.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
 			GeometryDraw.DrawCircle(gameObject, cd.x, cd.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierTertiaryLine, 0, 1f);
 		}
 
 		// draw bezier interpolation lines
-		if (drawSecondOrder) GeometryDraw.DrawLine(gameObject, new[] { ab, bc }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
-		if (drawSecondOrder) GeometryDraw.DrawLine(gameObject, new[] { bc, cd }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
+		if (drawQuadraticSecondOrderLines) {
+			GeometryDraw.DrawLine(gameObject, new[] { ab, bc }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
+			GeometryDraw.DrawLine(gameObject, new[] { bc, cd }, ColorSettings.instance.bezierTertiaryLineThickness, ColorSettings.instance.bezierTertiaryLine);
+		}
 
-
-		if (drawThirdOrderHandles) {
+		if (drawQuadraticThirdOrderHandles) {
 			GeometryDraw.DrawCircle(gameObject, abbc.x, abbc.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierQuaternaryLine, 0, 1f);
 			GeometryDraw.DrawCircle(gameObject, bccd.x, bccd.y, ColorSettings.instance.bezierHandleDotSize, ColorSettings.instance.bezierQuaternaryLine, 0, 1f);
 		}
 
-		if (drawThirdOrder) GeometryDraw.DrawLine(gameObject, new[] { abbc, bccd }, ColorSettings.instance.bezierQuarternaryLineThickness, ColorSettings.instance.bezierQuaternaryLine);
+		if (drawQuadraticThirdOrderLines) {
+			GeometryDraw.DrawLine(gameObject, new[] { abbc, bccd }, ColorSettings.instance.bezierQuarternaryLineThickness, ColorSettings.instance.bezierQuaternaryLine);
+		}
 
 		// draw bezier dot
-		if (drawCurveDot) GeometryDraw.DrawCircle(gameObject, abbcbccd.x, abbcbccd.y, .1f, ColorSettings.instance.bezierCurve, 0, 1f);
+		if (drawQuadraticCurveDot) {
+			GeometryDraw.DrawCircle(gameObject, abbcbccd.x, abbcbccd.y, .1f, ColorSettings.instance.bezierCurve, -1, 1f);
+		}
 
 		// draw bezier curve
-		if (drawCurve) DrawBezier(64, ColorSettings.instance.bezierCurveThickness, ColorSettings.instance.bezierCurveHandle);
+		if (drawQuadraticCurve) {
+			DrawQuadraticBezier(64, ColorSettings.instance.bezierCurveThickness, ColorSettings.instance.bezierCurveHandle);
+		}
 		
 		GeometryDraw.Finalize(gameObject);
 
@@ -100,7 +148,7 @@ public class BezierController : MonoBehaviour {
 		else ReleaseHandle();
 	}
 
-	void DrawBezier(int numSamples, float width, Color color) {
+	void DrawQuadraticBezier(int numSamples, float width, Color color) {
 		var prev = a;
 		for (var i = 0; i < numSamples; i++) {
 			var progress = (float)i / (numSamples - 1);
@@ -117,7 +165,21 @@ public class BezierController : MonoBehaviour {
 
 			prev = abbcbccd;
 		}
-		
+	}
+
+	void DrawCubicBezier(int numSamples, float width, Color color) {
+		var prev = a;
+		for (var i = 0; i < numSamples; i++) {
+			var progress = (float)i / (numSamples - 1);
+			var ab = Vector2.Lerp(a, b, progress);
+			var bd = Vector2.Lerp(b, d, progress);
+			var abbd = Vector2.Lerp(ab, bd, progress);
+
+			GeometryDraw.DrawLine(gameObject, new[] { prev, abbd }, width, color);
+			GeometryDraw.DrawCircle(gameObject, abbd.x, abbd.y, width / 2, color, 0, .2f);
+
+			prev = abbd;
+		}
 	}
 
 	void MoveHandle() {

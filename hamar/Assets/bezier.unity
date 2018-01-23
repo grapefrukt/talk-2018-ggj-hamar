@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1864904777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1882868379
 Transform:
   m_ObjectHideFlags: 0
@@ -567,14 +567,21 @@ MonoBehaviour:
   animationSpeed: 0.3
   progress: 0
   drawSimpleLine: 0
-  drawControlHandles: 0
-  drawBezierOutline: 0
-  drawSecondOrderHandles: 1
-  drawSecondOrder: 0
-  drawThirdOrderHandles: 1
-  drawThirdOrder: 0
-  drawCurveDot: 0
-  drawCurve: 0
+  drawSimpleLerp: 0
+  drawCubicHandle: 0
+  drawCubicOutline: 0
+  drawCubicLerps: 0
+  drawCubicLines: 0
+  drawCubicCurveDot: 0
+  drawCubicCurve: 0
+  drawQuadraticHandles: 0
+  drawQuadraticOutline: 0
+  drawQuadraticLerps: 0
+  drawQuadraticSecondOrderLines: 0
+  drawQuadraticThirdOrderHandles: 0
+  drawQuadraticThirdOrderLines: 0
+  drawQuadraticCurveDot: 0
+  drawQuadraticCurve: 0
 --- !u!33 &1882868381
 MeshFilter:
   m_ObjectHideFlags: 0
