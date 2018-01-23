@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SlideController : MonoBehaviour {
 
-	public int slideIndex = 0;
+	public int index = 0;
 
 	public BezierController bezier;
 	public PoissonController poisson;
@@ -22,14 +22,14 @@ public class SlideController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.LeftArrow)) delta--;
 		if (delta == 0) return;
 
-		if (slideIndex + delta < 0) return;
+		if (index + delta < 0) return;
 
-		SetSlide(slideIndex + delta);
+		SetSlide(index + delta);
 	}
 
-	void SetSlide(int index) {
-		Debug.Log(index);
-		slideIndex = index;
+	void SetSlide(int newIndex) {
+		Debug.Log(newIndex);
+		index = newIndex;
 		DisableEverything();
 
 		var i = 0;
@@ -142,17 +142,19 @@ public class SlideController : MonoBehaviour {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
 			bezier.drawQuadraticCurve = true;
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
-		} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		//} else if (i++ == index) {
+		} else {
+			index = 0;
 		}
 	}
 
