@@ -82,14 +82,33 @@ public class SlideController : MonoBehaviour {
 			rymdkapsel.gameObject.SetActive(true);
 			note = "Before that I made a game called rymdkapsel that people liked. That was my first commercial game and I was lucky enough to have it do really well.";
 		} else if (i++ == index) {
+			note = "The first trick we’re going to learn today is Bezier curves.";
+		} else if (i++ == index) {
+			note = "I’m sure you’re familiar with Bezier curves even if you don’t know them by name. They’re the smooth curves you can draw in almost any drawing program that have a couple of little handles that let you tweak the bend of the line.";
+		} else if (i++ == index) {
+			note = "You can make these yourself with a little bit of code and they’re really nice for many things. I like to use them when I need something to fly along a path that looks a bit like “it just flew out” but being able to control exactly where it goes. \n";
+		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawSimpleLine = true;
+			note = "These little dudes all start with the basic concept of linear interpolation. Which sounds a little bit complicated, but it isn’t too bad. ";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.time = 0;
 			bezier.drawSimpleLine = true;
 			bezier.drawSimpleLerp = true;
+			note = "Essentially, you have a start value and an end value. You feed these two into a little function along with a value that represents how far along this distance (as a percentage) we want to go.";
 		} else if (i++ == index) {
+			bezier.gameObject.SetActive(true);
+			bezier.drawSimpleLine = true;
+			bezier.drawSimpleLerp = true;
+			note = "This is what’s usually called a lerp, short for linear interpolation. \nYou do this for both x and y values separately to get a two dimensional lerp. No biggie.";
+		} else if (i++ == index) {
+			bezier.gameObject.SetActive(true);
+			bezier.time = 0;
+			bezier.drawSimpleLine = true;
+			bezier.drawSimpleLerp = true;
+			note = "Now, beziers are made by lerping your lerps.\nThere are a couple of variants when it comes to beziers, we’re going to look at cubic beziers.";
+		/*} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawCubicHandle = true;
 		} else if (i++ == index) {
@@ -125,32 +144,29 @@ public class SlideController : MonoBehaviour {
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawCubicHandle = true;
-			bezier.drawCubicCurve = true;
+			bezier.drawCubicCurve = true;*/
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
+			note = "To make them, we’re going to need two more points. These will be our control handles.";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
 			bezier.drawQuadraticOutline = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawQuadraticHandles = true;
-			bezier.drawQuadraticOutline = true;
-			bezier.drawQuadraticLerps = true;
+			note = "Now we imagine three lines, from A to B to C to D.";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
 			bezier.drawQuadraticOutline = true;
 			bezier.drawQuadraticLerps = true;
-			bezier.drawQuadraticSecondOrderLines = true;
+			note = "Then we lerp along these lines. That gives us three new points.";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
 			bezier.drawQuadraticOutline = true;
 			bezier.drawQuadraticLerps = true;
 			bezier.drawQuadraticSecondOrderLines = true;
-			bezier.drawQuadraticThirdOrderHandles = true;
+			note = "Which in turn gets us two new lines. ";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
@@ -158,7 +174,7 @@ public class SlideController : MonoBehaviour {
 			bezier.drawQuadraticLerps = true;
 			bezier.drawQuadraticSecondOrderLines = true;
 			bezier.drawQuadraticThirdOrderHandles = true;
-			bezier.drawQuadraticThirdOrderLines = true;
+			note = "Which we can lerp along. ";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
@@ -168,6 +184,7 @@ public class SlideController : MonoBehaviour {
 			bezier.drawQuadraticThirdOrderHandles = true;
 			bezier.drawQuadraticThirdOrderLines = true;
 			bezier.drawQuadraticCurveDot = true;
+			note = "That gives a final line, which we can lerp along too. Maybe you can see it already?";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
@@ -178,10 +195,12 @@ public class SlideController : MonoBehaviour {
 			bezier.drawQuadraticThirdOrderLines = true;
 			bezier.drawQuadraticCurveDot = true;
 			bezier.drawQuadraticCurve = true;
+			note = "The path that final lerp takes is our nice smooth curve. ";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
 			bezier.drawQuadraticCurve = true;
+			note = "That’s a cubic bezier! A lerp of a lerp of a lerp.";
 		//} else if (i++ == index) {
 		//} else if (i++ == index) {
 		//} else if (i++ == index) {
