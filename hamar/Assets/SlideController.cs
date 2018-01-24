@@ -20,7 +20,7 @@ public class SlideController : MonoBehaviour {
 	public TextMeshPro timer;
 
 	void Start(){
-		SetSlide(0);
+		SetSlide(26);
 	}
 
 	// Update is called once per frame
@@ -30,6 +30,10 @@ public class SlideController : MonoBehaviour {
 		var minutes = Mathf.Floor(t / 60);
 		var seconds = Mathf.FloorToInt(t % 60);
 		timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+		if (Input.GetKeyDown(KeyCode.UpArrow)) {
+			poisson.sampler.Step();
+		}
 
 		var delta = 0;
 		if (Input.GetKeyDown(KeyCode.RightArrow)) delta++;
@@ -107,43 +111,6 @@ public class SlideController : MonoBehaviour {
 			bezier.drawSimpleLine = true;
 			bezier.drawSimpleLerp = true;
 			note = "Now, beziers are made by lerping your lerps.\nThere are a couple of variants when it comes to beziers, we’re going to look at cubic beziers.";
-		/*} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-			bezier.drawCubicOutline = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-			bezier.drawCubicOutline = true;
-			bezier.drawCubicLerps = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-			bezier.drawCubicOutline = true;
-			bezier.drawCubicLerps = true;
-			bezier.drawCubicLines = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-			bezier.drawCubicOutline = true;
-			bezier.drawCubicLerps = true;
-			bezier.drawCubicLines = true;
-			bezier.drawCubicCurveDot = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-			bezier.drawCubicOutline = true;
-			bezier.drawCubicLerps = true;
-			bezier.drawCubicLines = true;
-			bezier.drawCubicCurveDot = true;
-			bezier.drawCubicCurve = true;
-		} else if (i++ == index) {
-			bezier.gameObject.SetActive(true);
-			bezier.drawCubicHandle = true;
-			bezier.drawCubicCurve = true;*/
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
 			bezier.drawQuadraticHandles = true;
@@ -204,16 +171,42 @@ public class SlideController : MonoBehaviour {
 		} else if (i++ == index) {
 			note = "Now that your curves are in order, maybe you need to spawn enemies across a level, or flowers on a field or spots on a leopard. That’s where this next trick comes in.";
 		} else if (i++ == index) {
+			poisson.gameObject.SetActive(true);
+			poisson.StopAndClear();
 			note = "It’s a thing called Blue Noise. It’s very useful when you need to place things across a level or playfield in a random but uniform fashion. \n";
 		} else if (i++ == index) {
+			poisson.gameObject.SetActive(true);
+			poisson.StopAndClear();
+			poisson.GoRandom();
 			note = "Pure random won’t do because you’ll get lumps of things in some places and large empty areas in others.";
 		} else if (i++ == index) {
+			poisson.gameObject.SetActive(true);
+			poisson.StopAndClear();
 			note = "Blue noise is a computer graphics term (not to be confused with the audio engineering term) that refers to a noise that is uniform but still random. ";
 		} else if (i++ == index) {
 			note = "One way to make this “blue noise” is Poisson Disk Sampling. Much like bezier curves this is a fairly simple concept to grasp but can be slightly trickier to implement well. ";
 		} else if (i++ == index) {
+			poisson.gameObject.SetActive(true);
+			poisson.StopAndClear();
+			poisson.seed = 17;
+			poisson.renderRadius = true;
+			poisson.renderBounds = true;
+			poisson.renderSamples = true;
+			poisson.renderColorized = true;
+			poisson.sampler.waitOnPoint = true;
+			poisson.sampler.waitOnSample = true;
+			poisson.Restart();
+
 			note = "The way it works is that we start with a random point. ";
 		} else if (i++ == index) {
+			poisson.gameObject.SetActive(true);
+			poisson.renderRadius = true;
+			poisson.renderBounds = true;
+			poisson.renderSamples = true;
+			poisson.renderColorized = true;
+			poisson.sampler.waitOnPoint = true;
+			poisson.sampler.waitOnSample = true;
+
 			note = "Then we “sample” around this point a couple of times, adding any points that fall in a valid spot. ";
 		} else if (i++ == index) {
 			note = "A valid spot is any place that is far enough away from all other spots, yet within the bounds of the area we are filling. ";
@@ -242,14 +235,13 @@ public class SlideController : MonoBehaviour {
 
 	void DisableEverything() {
 		bezier.gameObject.SetActive(false);
-		poisson.gameObject.SetActive(false);
+		//poisson.gameObject.SetActive(false);
 		pythagoras.gameObject.SetActive(false);
 		twofold.gameObject.SetActive(false);
 		rymdkapsel.gameObject.SetActive(false);
 
 		DisableAllBools(bezier);
-		DisableAllBools(bezier);
-		DisableAllBools(poissonSampler);
+		DisableAllBools(poisson);
 
 		bezier.animateProgress = true;
 	}

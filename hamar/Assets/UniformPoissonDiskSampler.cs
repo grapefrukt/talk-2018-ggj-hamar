@@ -38,10 +38,10 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 
 	Vector2?[,] grid;
 
-	[HideInInspector]
-	public List<Vector2> activePoints;
-	[HideInInspector]
-	public List<Vector2> points;
+	[NonSerialized]
+	public List<Vector2> activePoints = new List<Vector2>();
+	[NonSerialized]
+	public List<Vector2> points = new List<Vector2>();
 
 	public Vector2 head { get; private set; }
 	public List<Vector2> samples { get; private set; }
@@ -58,6 +58,10 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 	public bool pause = true;
 	[Range(0, 50)]
 	public float speed = 0;
+
+	void Start() {
+		Debug.Log("wtf");
+	}
 
 	public void Initialize(Vector2 topLeft, Vector2 lowerRight, int seed) {
 		points = new List<Vector2>();
@@ -94,6 +98,8 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 
 	public IEnumerator Sample() {
 		AddFirstPoint();
+		head = activePoints[0];
+
 		while (Sleep(waitOnPoint)) yield return null;
 
 		while (activePoints.Count != 0) {
@@ -185,5 +191,9 @@ public class UniformPoissonDiskSampler : MonoBehaviour {
 
 	static Vector2 Denormalize(Vector2 point, Vector2 origin, double cellSize) {
 		return new Vector2((int)((point.x - origin.x) / cellSize), (int)((point.y - origin.y) / cellSize));
+	}
+
+	public void Step() {
+		step++;
 	}
 }

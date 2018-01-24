@@ -16,7 +16,7 @@ namespace Editor {
 			GUILayout.EndHorizontal();
 
 			if (GUILayout.Button("Place Random")) poisson.GoRandom();
-			if (GUILayout.Button("Step Sampler")) poisson.sampler.step++;
+			if (GUILayout.Button("Step Sampler")) poisson.sampler.Step();
 		}
 
 	}

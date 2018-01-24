@@ -48,7 +48,7 @@ public class PoissonController : MonoBehaviour {
 		}
 	}
 
-	void Restart() {
+	public void Restart() {
 		restartQueued = false;
 		StopAndClear();
 		Go();
@@ -56,15 +56,12 @@ public class PoissonController : MonoBehaviour {
 
 	public void StopAndClear() {
 		foreach (Transform child in transform) Destroy(child.gameObject);
-		sampler = null;
 		if (coroutine != null) StopCoroutine(coroutine);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (restartQueued) Restart();
-
-		if (sampler == null) return;
 
 		if (renderSamples) {
 
@@ -85,7 +82,7 @@ public class PoissonController : MonoBehaviour {
 			}
 		}
 
-		while (sampler.points.Count - 1 > index) {
+		while (sampler.points != null && sampler.points.Count - 1 > index) {
 			index++;
 			MakePoint(sampler.points[index]);
 		}
