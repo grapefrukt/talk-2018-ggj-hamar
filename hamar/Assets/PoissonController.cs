@@ -120,4 +120,11 @@ public class PoissonController : MonoBehaviour {
 	public void QueueRestart() {
 		restartQueued = true;
 	}
+
+	public void RenderAllPoints() {
+		var points = GetComponentsInChildren<PoissonPoint>();
+		foreach (var point in points) {
+			point.Render();
+		}
+	}
 }

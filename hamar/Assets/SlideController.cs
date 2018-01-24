@@ -18,9 +18,10 @@ public class SlideController : MonoBehaviour {
 	public SpriteRenderer rymdkapsel; 
 	public TextMeshPro notes;
 	public TextMeshPro timer;
+	public TextMeshPro header;
 
 	void Start(){
-		SetSlide(26);
+		SetSlide(0);
 	}
 
 	// Update is called once per frame
@@ -55,16 +56,19 @@ public class SlideController : MonoBehaviour {
 		DisableEverything();
 
 		var note = "";
-
+		var title = "";
 		var i = 0;
+
 		if (i++ == index) {
 			// empty
 		} else if (i++ == index) {
 			StartTimer();
+			title = "fancy math";
 			note = "Today I’m going to talk about some fancy math tricks you can use in your games. Don’t worry if you’re not a math person, I hope it’s going to make sense regardless.";
 		} else if (i++ == index) {
 			note = "Game making in general and programming specifically involves a lot of abstraction, someone else has done a bunch of work you can make use of to make even cooler things.";
 		} else if (i++ == index) {
+			pythagoras.gameObject.SetActive(true);
 			note = "History is full of clever people working out theorems and clever ways of solving problems that, as luck would have it, are really useful when making games thousands of years later.";
 		} else if (i++ == index) {
 			pythagoras.gameObject.SetActive(true);
@@ -76,6 +80,7 @@ public class SlideController : MonoBehaviour {
 			pythagoras.gameObject.SetActive(true);
 			note = "He also didn’t like beans. \nYes. Really. \nYou see him pictured here in a French manuscript from the 1500s going all “nope” to some fava-beans.";
 		} else if (i++ == index) {
+			title = "martin";
 			note = "My name is Martin. I’m a solo indie developer and have been so for the past six years. I do a lot of things with my time, but most of it is spent programming. ";
 		} else if (i++ == index) {
 			note = "I have no proper education for this, I’m making things up as I go along. It’s been working out okay so far. ";
@@ -86,10 +91,13 @@ public class SlideController : MonoBehaviour {
 			rymdkapsel.gameObject.SetActive(true);
 			note = "Before that I made a game called rymdkapsel that people liked. That was my first commercial game and I was lucky enough to have it do really well.";
 		} else if (i++ == index) {
+			title = "bezier curves";
 			note = "The first trick we’re going to learn today is Bezier curves.";
 		} else if (i++ == index) {
+			title = "bezier curves";
 			note = "I’m sure you’re familiar with Bezier curves even if you don’t know them by name. They’re the smooth curves you can draw in almost any drawing program that have a couple of little handles that let you tweak the bend of the line.";
 		} else if (i++ == index) {
+			title = "bezier curves";
 			note = "You can make these yourself with a little bit of code and they’re really nice for many things. I like to use them when I need something to fly along a path that looks a bit like “it just flew out” but being able to control exactly where it goes. \n";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
@@ -105,6 +113,7 @@ public class SlideController : MonoBehaviour {
 			bezier.gameObject.SetActive(true);
 			bezier.drawSimpleLine = true;
 			bezier.drawSimpleLerp = true;
+			title = "lerp";
 			note = "This is what’s usually called a lerp, short for linear interpolation. \nYou do this for both x and y values separately to get a two dimensional lerp. No biggie.";
 		} else if (i++ == index) {
 			bezier.gameObject.SetActive(true);
@@ -169,8 +178,10 @@ public class SlideController : MonoBehaviour {
 			bezier.drawQuadraticCurve = true;
 			note = "That’s a cubic bezier! A lerp of a lerp of a lerp.";
 		} else if (i++ == index) {
+			title = "noise";
 			note = "Now that your curves are in order, maybe you need to spawn enemies across a level, or flowers on a field or spots on a leopard. That’s where this next trick comes in.";
 		} else if (i++ == index) {
+			title = "blue noise";
 			poisson.gameObject.SetActive(true);
 			poisson.StopAndClear();
 			note = "It’s a thing called Blue Noise. It’s very useful when you need to place things across a level or playfield in a random but uniform fashion. \n";
@@ -180,50 +191,86 @@ public class SlideController : MonoBehaviour {
 			poisson.GoRandom();
 			note = "Pure random won’t do because you’ll get lumps of things in some places and large empty areas in others.";
 		} else if (i++ == index) {
+			title = "blue noise";
 			poisson.gameObject.SetActive(true);
 			poisson.StopAndClear();
 			note = "Blue noise is a computer graphics term (not to be confused with the audio engineering term) that refers to a noise that is uniform but still random. ";
 		} else if (i++ == index) {
+			title = "poisson disk sampling";
 			note = "One way to make this “blue noise” is Poisson Disk Sampling. Much like bezier curves this is a fairly simple concept to grasp but can be slightly trickier to implement well. ";
 		} else if (i++ == index) {
-			poisson.gameObject.SetActive(true);
+			EnablePoisson();
 			poisson.StopAndClear();
+			poisson.sampler.minimumDistance = .5f;
 			poisson.seed = 17;
-			poisson.renderRadius = true;
-			poisson.renderBounds = true;
-			poisson.renderSamples = true;
-			poisson.renderColorized = true;
-			poisson.sampler.waitOnPoint = true;
-			poisson.sampler.waitOnSample = true;
 			poisson.Restart();
-
 			note = "The way it works is that we start with a random point. ";
 		} else if (i++ == index) {
-			poisson.gameObject.SetActive(true);
-			poisson.renderRadius = true;
-			poisson.renderBounds = true;
-			poisson.renderSamples = true;
-			poisson.renderColorized = true;
-			poisson.sampler.waitOnPoint = true;
-			poisson.sampler.waitOnSample = true;
-
-			note = "Then we “sample” around this point a couple of times, adding any points that fall in a valid spot. ";
+			EnablePoisson();
+			note = "Then we “sample” around this point a couple of times, adding any points that fall in a valid spot. \n(PRESS UP)";
 		} else if (i++ == index) {
-			note = "A valid spot is any place that is far enough away from all other spots, yet within the bounds of the area we are filling. ";
+			EnablePoisson();
+			note = "A valid spot is any place that is far enough away from all other spots, yet within the bounds of the area we are filling. \n(PRESS UP)";
 		} else if (i++ == index) {
-			note = "Once a point has done all its samples, we mark it as done and move on to the next point. ";
+			EnablePoisson();
+			note = "Once a point has done all its samples, we mark it as done and move on to the next point.\n(PRESS UP)";
 		} else if (i++ == index) {
+			EnablePoisson();
+			poisson.sampler.pause = false;
+			poisson.sampler.speed = 8;
 			note = "Then we keep doing this until we no longer have any open points. ";
 		} else if (i++ == index) {
+			EnablePoisson();
+			poisson.sampler.pause = false;
+			poisson.sampler.speed = 50;
+			poisson.sampler.waitOnSample = false;
 			note = "With some luck, this means our target area is filled with points. ";
 		} else if (i++ == index) {
+			EnablePoisson();
+			poisson.renderRadius = false;
+			poisson.renderBounds = false;
+			poisson.renderColorized = false;
+			poisson.renderSamples = false;
+			poisson.RenderAllPoints();
+			note = "And when we turn off all the debug visualizations, this is what it looks like. Nice and even, yet random.";
+		} else if (i++ == index) {
+			EnablePoisson();
+			poisson.StopAndClear();
+			poisson.seed = 17;
+			poisson.renderRadius = false;
+			poisson.renderBounds = false;
+			poisson.renderColorized = false;
+			poisson.renderSamples = false;
+			poisson.sampler.minimumDistance = .3f;
+			poisson.Restart();
+			poisson.sampler.pause = false;
+			poisson.sampler.speed = 50;
+			poisson.sampler.waitOnSample = false;
 			note = "There’s a lot of room to tweak this algorithm, you can adjust how far apart the samples are.";
 		} else if (i++ == index) {
+			EnablePoisson();
+			poisson.StopAndClear();
+			poisson.seed = 17;
+			poisson.sampler.pointsPerIteration = 20;
+			poisson.sampler.minimumDistance = .5f;
+			poisson.renderRadius = false;
+			poisson.renderBounds = false;
+			poisson.renderColorized = false;
+			poisson.renderSamples = false;
+			poisson.Restart();
+			poisson.sampler.pause = false;
+			poisson.sampler.speed = 50;
+			poisson.sampler.waitOnSample = false;
 			note = "You can adjust how many samples are made. For a more computationally expensive but denser spacing. ";
 		} else if (i++ == index) {
-			note = "If you’re feeling frisky you can use a variable distance to make interesting patterns. ";
+			poisson.StopAndClear();
+			title = "the end";
+			note = "The code for this entire presentation along with the Unity project, notes and everything is available at github.com/grapefrukt/talk-2018-ggj-hamar";
 		} else if (i++ == index) {
-			note = "The code for this entire presentation along with the Unity project, notes and everything is available at github.com/grapefrukt/talk-2018-ggj-hamar\n";
+			title = "github.com/grapefrukt/talk-2018-ggj-hamar";
+			header.fontSize = 7;
+			header.enableAutoSizing = false;
+			note = "The code for this entire presentation along with the Unity project, notes and everything is available at github.com/grapefrukt/talk-2018-ggj-hamar";
 		} else if (i++ == index) {
 			note = "ADVANCE AGAIN TO RESTART PRESENTATION!";
 		} else {
@@ -231,6 +278,17 @@ public class SlideController : MonoBehaviour {
 		}
 
 		notes.text = note;
+		header.text = title;
+	}
+
+	void EnablePoisson() {
+		poisson.gameObject.SetActive(true);
+		poisson.renderRadius = true;
+		poisson.renderBounds = true;
+		poisson.renderSamples = true;
+		poisson.renderColorized = true;
+		poisson.sampler.waitOnPoint = true;
+		poisson.sampler.waitOnSample = true;
 	}
 
 	void DisableEverything() {
